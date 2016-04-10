@@ -1,0 +1,214 @@
+/*index*/
+#github{
+	position: absolute;
+	right: 5px;
+	bottom: 0;
+}
+.navbar-brand{
+	margin-top: -15px;
+}
+.nav li:hover{
+	background-color: #e7e7e7;
+}
+#headpic{
+	background-color: #eee; 
+	border: none;
+	position: relative;
+}
+#abstract{
+	width: 362px;
+	height: 123px;
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	padding: 10px 10px 30px 10px;
+	background: -moz-linear-gradient(top, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.5) 75%, rgba(255,255,255,0) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.7)), color-stop(75%,rgba(255,255,255,0.5)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgba(255,255,255,0.7) 0%,rgba(255,255,255,0.5) 75%,rgba(255,255,255,0) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgba(255,255,255,0.7) 0%,rgba(255,255,255,0.5) 75%,rgba(255,255,255,0) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, rgba(255,255,255,0.7) 0%,rgba(255,255,255,0.5) 75%,rgba(255,255,255,0) 100%); /* IE10+ */
+    background: linear-gradient(to bottom, rgba(255,255,255,0.7) 0%,rgba(255,255,255,0.5) 75%,rgba(255,255,255,0) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3ffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
+}
+#abstract h6{
+	font-size: 18px;
+	font-weight: bold;
+	margin-bottom: 12px;
+	text-align: right;
+}
+#abstract p{
+	font-size: 12px;
+	text-indent: 2em;
+	line-height: 150%;
+}
+.des{
+	margin: 10px auto;
+}
+.caption p{
+	font-size: 9px;
+	margin-bottom: 5px;
+	text-indent: 2em;
+	text-align: left;
+}
+.author{
+	text-align: center;
+}
+.author-img{
+	width: 290px;
+	height: 290px;
+	border-radius: 50%;
+	background-color: #fff;
+	margin-top: -50px;
+	margin-bottom: 50px;
+}
+.author-des p{
+	text-align: left;
+	text-indent: 2em;
+}
+#footer{
+	background-color: #000;
+	text-align: center;
+}
+.footernav{
+	width: 100%;
+	border-bottom: 1px solid #fff;
+}
+.footernav li:hover a{
+	background-color: #000;
+}
+#navbar-nav{
+	width: 400px;
+	margin: 0  auto;
+}
+#link{
+	clear: both;
+}
+#link h2{
+	font-size: 18px;
+	text-indent: 2em;
+}
+#link ul,li{
+	list-style: none;
+}
+#link li>li:hover,a:hover{
+	color: #fff;
+}
+/*article*/
+.article{
+	background-color: #eee;
+	margin: 50px 0 0 0;
+	padding: 50px 0;
+}
+.items{
+	background-color: #fff;
+	position: relative;
+	padding: 10px;
+	margin: 0 0 20px 20px;
+}
+.items h1{
+	font-size: 22px;
+	font-weight: bold;
+	color: red;
+}
+.items h2{
+	font-size: 18px;
+	font-weight: bold;
+	color: blue;
+}
+#iterms-date{
+	position:absolute;
+	width: 40px;
+	height: 30px;
+	left: -40px;
+	top: 20px;
+	background-color: pink;
+	color: #fff;
+	text-align: center;
+	line-height: 30px;
+}
+#iterms-type{
+	position:absolute;
+	width: 40px;
+	height: 30px;
+	left: -40px;
+	top: 50px;
+	background-color: orange;
+	color: #fff;
+	text-align: center;
+	line-height: 30px;
+}
+#iterms-issue{
+	color: #ccc;
+	font-size: 12px;
+	position: absolute;
+	right: 10px;
+	bottom: 5px;
+}
+.items p{
+	text-indent: 2em;
+}
+.pagenav{
+	margin: 40px;
+}
+.form-control{
+	background: url("../imgs/search.png");
+	background-repeat:  no-repeat;
+}
+.list-group{
+	clear: both;
+	background-color: blue;
+}
+.list-group-item{
+	margin-left: 2px;
+	margin-bottom: 1px;
+}
+.list-group a:hover{
+	color: red;
+	background-color: #ccc;
+}
+/*没有小于768px，是因为Bootstrap3以移动端优先设计*/
+/* 小屏幕（平板，大于等于768px） */
+@media (min-width: 768px) {
+	/*index*/
+	.caption p{
+		font-size: 11px;
+	}
+	.des{
+		margin: 10px;
+	}
+	/*article*/
+	.form-control{
+		background-size: 95px 32px;
+	}
+}
+
+/* 中等屏幕（桌面显示器，大于等于992px） */
+@media (min-width: 992px) {
+	/*index*/
+	.caption p{
+		font-size: 13px;
+	}
+	.des{
+		margin: 10px;
+	}
+	/*article*/
+	.form-control{
+		background-size: 150px 32px;
+	}
+}
+
+/* 大屏幕（大桌面显示器，大于等于1200px） */
+@media (min-width: 1200px) {
+	/*index*/
+	.caption p{
+		font-size: 15px;
+	}
+	.des{
+		width: 280px;
+		margin: 10px;
+	}
+	/*article*/
+	.form-control{
+		background-size: 195px 34px;
+	}
+}
