@@ -43,6 +43,7 @@
 }
 .des{
 	margin: 10px auto;
+	box-shadow: 2px 2px 3px #ccc;
 }
 .caption p{
 	font-size: 9px;
@@ -104,6 +105,7 @@
 	position: relative;
 	padding: 10px;
 	margin: 0 0 20px 20px;
+	box-shadow: 2px 2px 3px #ccc;
 }
 .items h1{
 	font-size: 22px;
@@ -153,10 +155,13 @@
 .form-control{
 	background: url("../imgs/search.png");
 	background-repeat:  no-repeat;
+	background-color: #fff;
+	background-size: 145px 34px;
 }
 .list-group{
 	clear: both;
 	background-color: blue;
+	box-shadow: 2px 2px 3px #ccc;
 }
 .list-group-item{
 	margin-left: 2px;
@@ -166,6 +171,46 @@
 	color: red;
 	background-color: #ccc;
 }
+#datetimepicker{
+	background-color: #fff;
+	padding: 30px;
+}
+#right-tag{
+	background-color: #fff;
+	margin-top: 20px;
+	padding: 20px;
+	box-shadow: 2px 2px 3px #ccc;
+}
+#tags{
+	font-family: 'Microsoft YaHei';
+	font-size: 13px;
+	color: #888;
+}
+#tags-title{
+	margin-bottom: 20px;
+}
+.tags-more{
+	font-size: 30px;
+}
+.tags-post{
+	font-size: 20px;
+}
+/*work*/
+.hotlist{
+	clear: both;
+	margin: 20px 0;
+}
+.hotlist blockquote{
+	padding: 0 20px;
+}
+.hotlist blockquote h2{
+	font-size: 18px;
+}
+.progressitem{
+	display: inline-block;
+}
+/*about*/
+
 /*没有小于768px，是因为Bootstrap3以移动端优先设计*/
 /* 小屏幕（平板，大于等于768px） */
 @media (min-width: 768px) {
@@ -177,9 +222,9 @@
 		margin: 10px;
 	}
 	/*article*/
-	.form-control{
-		background-size: 95px 32px;
-	}
+	
+	/*work*/
+
 }
 
 /* 中等屏幕（桌面显示器，大于等于992px） */
@@ -192,9 +237,11 @@
 		margin: 10px;
 	}
 	/*article*/
-	.form-control{
-		background-size: 150px 32px;
+	#datetimepicker{
+		padding: 35px;
 	}
+	/*work*/
+
 }
 
 /* 大屏幕（大桌面显示器，大于等于1200px） */
@@ -208,7 +255,9 @@
 		margin: 10px;
 	}
 	/*article*/
-	.form-control{
-		background-size: 195px 34px;
+	#datetimepicker{
+		padding: 25px;
 	}
+	/*work*/
+
 }
