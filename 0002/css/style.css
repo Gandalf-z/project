@@ -196,6 +196,7 @@
 	font-size: 20px;
 }
 /*work*/
+
 .hotlist{
 	clear: both;
 	margin: 20px 0;
@@ -206,13 +207,181 @@
 .hotlist blockquote h2{
 	font-size: 18px;
 }
-.progressitem{
+.ranking-num{
+	font-size: 12px;
+	background-color: red;
+	border-radius: 50%;
+	color: #fff;
+	width: 20px;
+	height: 20px;
+	line-height: 20px;
+	text-align: center;
+	float: left;
+}
+.ranking-bar-wrap{
+	float: left;
 	display: inline-block;
+	border: 1px solid red;
+	width: 120px;
+	height: 20px;
+	margin: 0 5px;
+}
+.ranking-bar{
+	background-color: red;
+	height: 18px;
+}
+.nav-tabs{
+	border: none;
+}
+.nav-tabs li{
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	background-color: #fff;
+}
+.nav1{
+	border-top: 2px solid red;
+}
+.nav1:hover{
+	border-top-color: blue;
+}
+.nav2{
+	border-top: 2px solid green;
+}
+.nav2:hover{
+	border-top-color: pink;
+}
+.nav3{
+	border-top: 2px solid blue;
+}
+.nav3:hover{
+	border-top-color: red;
+}
+.nav4{
+	border-top: 2px solid pink;
+}
+.nav4:hover{
+	border-top-color: green;
+}
+.nav5{
+	border-top: 2px solid red;
+}
+.nav5:hover{
+	border-top-color: blue;
+}
+.nav-tabs{
+	width: 600px;
+}
+/*瀑布流*/
+.container-fluid {
+  padding: 20px;
+}
+.box {
+	float: left;
+  	margin-bottom: 20px;
+  	width: 260px;
+}
+.box img {
+  max-width: 100%
+}
+#masonry{
+	background-color: #ddd;
+}
+.box-text{
+	padding: 5px;
+}
+.box-text span{
+	margin-top: 40px;
+	cursor: pointer;
 }
 /*about*/
+.timeline{
+	background-color: #eee;
+	padding: 80px 10px;
+	clear: both;
+	margin-top: 50px;
+	position: relative;
+}
+.timelineleft{
+	width: 50%;
+	height: 1600px;
+	background-color: #fff;
+	float: left;
+}
+.info{
+	width: 50%;
+	height: 400px;
+	border-left: 5px solid #ccc;
+	position: relative;
+	float: right;
+	background-color: #fff;
+}
+.info img{
+	position: absolute;
+	border-radius: 50%;
+	width: 200px;
+	border: 5px solid #ccc;
+	left: -100px;
+	top: -50px;
+}
+.info-contact img{
+	width: 160px;
+	left: -80px;
+}
+.info-edu img{
+	width: 120px;
+	left: -60px;
+}
+.info-tran img{
+	width: 80px;
+	left: -40px;
+}
+.info h1{
+	position: absolute;
+	left: -200px;
+	top: 180px;
+	font-size: 22px;
+	font-weight: bold;
+}
+.info-name p{
+	position: absolute;
+	margin-right: 20px;
+	left: 100px;
+	top: 180px;
+	font-size: 14px; 
+	line-height: 2;
+}
+.info-qq{
+	position: absolute;
+	left: 100px;
+	top: 180px;
+}
+.info-blog{
+	position: absolute;
+	left: 100px;
+	top: 240px;
+	margin-right: 10px;
+}
+.info-blog a:hover{
+	color: green;
+}
+.info-edu-item1{
+	position: absolute;
+	left: 100px;
+	top: 120px;
+}.info-edu-item2{
+	position: absolute;
+	left: 100px;
+	top: 220px;
+}
+.info-tran-item{
+	position: absolute;
+	left: 100px;
+	top: 180px;
+}
 
 /*没有小于768px，是因为Bootstrap3以移动端优先设计*/
 /* 小屏幕（平板，大于等于768px） */
+
 @media (min-width: 768px) {
 	/*index*/
 	.caption p{
@@ -222,7 +391,9 @@
 		margin: 10px;
 	}
 	/*article*/
-	
+	.box {
+	  width: 290px;
+	}
 	/*work*/
 
 }
@@ -239,6 +410,12 @@
 	/*article*/
 	#datetimepicker{
 		padding: 35px;
+	}
+	.box {
+	  width: 290px;
+	}
+	.nav-tabs{
+		width: 100%;
 	}
 	/*work*/
 
@@ -258,6 +435,58 @@
 	#datetimepicker{
 		padding: 25px;
 	}
+	.box {
+	  width: 240px;
+	}
+	.nav-tabs{
+		width: 100%;
+	}
 	/*work*/
 
+}
+@media (max-width: 768px) {
+	/*work*/
+.info img{
+	width: 160px;
+	left: -80px;
+	top: -50px;
+}
+.info-contact img{
+	width: 120px;
+	left: -60px;
+}
+.info-edu img{
+	width: 80px;
+	left: -40px;
+}
+.info-tran img{
+	width: 40px;
+	left: -20px;
+}
+.info h1{
+	left: -150px;
+	top: 120px;
+}
+.info-name p{
+	left: 60px;
+}
+.info-qq{
+	left: 60px;
+	top: 80px;
+}
+.info-blog{
+	left: 60px;
+	top: 120px;
+}
+.info-edu-item1{
+	left: 60px;
+	top: 80px;
+}.info-edu-item2{
+	left: 60px;
+	top: 160px;
+}
+.info-tran-item{
+	left: 60px;
+	top: 80px;
+}
 }
