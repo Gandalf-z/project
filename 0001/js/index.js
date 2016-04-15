@@ -1,18 +1,6 @@
 
 // 公用函数
 
-// addLoadEvent函数
-function addLoadEvent(func) {
-	var oldonload = window.onload;
-	if (typeof window.onload != 'function') {
-		window.onload = func;
-	} else {
-		window.onload = function() {
-			oldonload();
-			func();
-		}
-	}
-}
 // ajax方法
 function ajax(url,data,method,success,error) { 
     var req = new XMLHttpRequest(),
@@ -52,42 +40,42 @@ function ajax(url,data,method,success,error) {
     }      
 }
 // 给element绑定一个针对event事件的响应，响应函数为listener
-function addEventListenerFun(element, event, listener) {
-  if (element.addEventListener) {
-    element.addEventListener(event, listener, false);
-  } else if (element.attachEvent) {
-      element.attachEvent("on"+event, listener);
+function addFuc(ele, event, listener) {
+  if (ele.addEventListener) {
+    ele.addEventListener(event, listener, false);
+  } else if (ele.attachEvent) {
+      ele.attachEvent("on"+event, listener);
     } else {
-        element["on"+event] = listener;
+        ele["on"+event] = listener;
       }
 }
   // 判断element是否有className
-  function hasClass(element, className) {
-    var classNameList = element.className.split(/\s+/);
-    for (var i = 0; i < classNameList.length; i++) {
-      if (classNameList[i] == className) {
+  function hasClass(ele, className) {
+    var list = ele.className.split(/\s+/);
+    for (var i = 0; i < list.length; i++) {
+      if (list[i] == className) {
           return true;
       }
     }
     return false;
   }
   // 为element增加一个className
-  function addClass(element, className) {
-    var classList = element.className.split(/\s+/);
-    if (!classList[0]) {
-      element.className = className;
+  function addClass(ele, className) {
+    var list = ele.className.split(/\s+/);
+    if (!list[0]) {
+      ele.className = className;
     } else {
-      element.className += ' ' + className;
+      ele.className += ' ' + className;
     }
   };
   // 移除element中的className
-  function removeClass(element, className) {
-    var classList = element.className.split(/\s+/);
-    if (!classList[0]) return;
-    for (var i = 0; i < classList.length; i++) {
-      if (classList[i] == className) {
-        classList.splice(i, 1);
-        element.className = classList.join(' ');
+  function removeClass(ele, className) {
+    var list = ele.className.split(/\s+/);
+    if (!list[0]) return;
+    for (var i = 0; i < list.length; i++) {
+      if (list[i] == className) {
+        list.splice(i, 1);
+        ele.className = list.join(' ');
       }
     }
   };
@@ -120,15 +108,27 @@ function addEventListenerFun(element, event, listener) {
   function getElementsByClassName(className){ 
     var classArr = [];
     var tags = document.getElementsByTagName('*');
-    for(var item in tags){ 
-      if(tags[item].nodeType == 1){ 
-        if(tags[item].getAttribute('class') == className){ 
-          classArr.push(tags[item]);
+    for(var i=0; i<tags.length; i++){ 
+      if(tags[i].nodeType == 1){ 
+        if(tags[i].getAttribute('class') == className){ 
+          classArr.push(tags[i]);
         }
       }
     }
     return classArr; //返回
   }
+// addLoadEvent函数
+function addLoadEvent(func) {
+  var oldonload = window.onload;
+  if (typeof window.onload != 'function') {
+    window.onload = func;
+  } else {
+    window.onload = function() {
+      oldonload();
+      func();
+    }
+  }
+}
 
 /*
   通知条
@@ -136,7 +136,7 @@ function addEventListenerFun(element, event, listener) {
 //添加tipClose点击事件，并设置cookie
 function closeTip(){
   var tipClose = document.getElementById("tipClose");  
-  addEventListenerFun(tipClose,"click",function() {
+  addFuc(tipClose,"click",function() {
     hideTip();
     setCookie("tipCookie","tipCookieValue",30);
   });
@@ -149,7 +149,7 @@ function checkCookie() {
     hideTip();
   }
 }
-addEventListenerFun(window,"unbeforeunload",checkCookie());
+addFuc(window,"unbeforeunload",checkCookie());
 // 隐藏通知条函数
 function hideTip() {
   var tip = document.getElementById("tip");
@@ -163,20 +163,20 @@ function hideTip() {
 function logIn() {
   //为关注按钮添加点击事件
   var follow = document.getElementById("follow");
-  addEventListenerFun(follow,"click",function() { 
+  addFuc(follow,"click",function() { 
     //先判断登陆的loginCookie是否已设置，登陆loginSuc cookie未设置checkLoginCookie函数返回true
     if (checkLoginCookie()) {
       // 登陆cookie未设置，弹出登陆弹窗
       showLoginPop();
       // 为登陆弹窗的关闭按钮添加点击事件，点击后关闭登陆弹窗
       var loginClose = document.getElementById("loginClose");
-      addEventListenerFun(loginClose,"click",function() {
+      addFuc(loginClose,"click",function() {
         closeLoginPop();
       });
       // 为登陆弹窗里的登陆按钮添加点击事件，并做表单验证,验证成功后ajax提交表单，失败后提示请正确输入
       var loginButton = document.getElementById("loginButton");
       //点击事件
-      addEventListenerFun(loginButton,"click",function() {
+      addFuc(loginButton,"click",function() {
         //获取用户输入的用户名和密码
         var userName = document.getElementById("userName"),
             password = document.getElementById("password");
@@ -187,16 +187,31 @@ function logIn() {
             ajax(
               url = 'http://study.163.com/webDev/login.htm',
               data = {
-                userName : md5(userName),
-                password : md5(password)
+                userName : md5("studyOnline"),
+                password : md5("study.163.com")
               },
               method = 'get',
-              success = function() {
-                //登陆成功，则设置loginSuc cookie，隐藏关注按钮，显示已关注按钮，并设置followSuc cookie
-                setCookie("loginSuc","loginSucValue",30);
-                hideFollow();
-                showFollowSuc();
-                setCookie("followSuc","followSucValue",30);
+              success = function(res) {
+                // alert(res);
+                if(res==1){
+                  //登陆成功，则设置loginSuc cookie
+                  closeLoginPop();
+                  setCookie("loginSuc","loginSucValue",30);
+                  ajax(
+                    url = 'http://study.163.com/webDev/attention.htm',
+                    data = {},
+                    method = 'get',
+                    success = function(res) {
+                      // alert(res);
+                      if(res==1){
+                        //隐藏关注按钮，显示已关注按钮，并设置followSuc cookie
+                        hideFollow();
+                        showFollowSuc();
+                        setCookie("followSuc","followSucValue",30);
+                      }
+                    }
+                  )
+                }
               },
               error = function() {alert("登陆错误，请重新登陆")}
             )
@@ -287,19 +302,19 @@ function circleImg() {
       //闭包防止作用域内活动对象的影响
       (function(j){ 
         //鼠标点击控制按钮作变换处理
-        addEventListenerFun(controlArr[j],"click",function(){ 
+        addFuc(controlArr[j],"click",function(){ 
           changeTo(j);
           curControl = j;
         });
       })(i);
       (function(j){ 
         //鼠标悬浮图片上方则清除定时器
-        addEventListenerFun(bannerArr[j],"mouseover",function(){ 
+        addFuc(bannerArr[j],"mouseover",function(){ 
           clearTimeout(autoChange);
           curControl = j;
         });
         //鼠标滑出图片则重置定时器
-        addEventListenerFun(bannerArr[j],"mouseout",function(){ 
+        addFuc(bannerArr[j],"mouseout",function(){ 
           autoChange = setInterval(function(){ 
             if(curControl < bannerLen -1){ 
               curControl ++;
@@ -367,10 +382,10 @@ addLoadEvent(circleImg);
 function videoPlay() {
   var videoImg = document.getElementById("videoImg"),
       videoClose = document.getElementById("videoClose");
-  addEventListenerFun(videoImg,"click",function() {
+  addFuc(videoImg,"click",function() {
     showVideoPop();
   });
-  addEventListenerFun(videoClose,"click",function() {
+  addFuc(videoClose,"click",function() {
     hideVideoPop();
   });
   // 弹出视频弹窗函数
@@ -504,12 +519,12 @@ function pagination(data, render, courseType, size) {
     // 初始化页码1的样式
     addClass(paginationList[1], 'on');
     //上一页、下一页点击事件
-    addEventListenerFun(prevBtn,"click",function () {
+    addFuc(prevBtn,"click",function () {
         if (index > 1) {
             reCourse(--index);
         }
     });
-    addEventListenerFun(nextBtn,"click",function () {
+    addFuc(nextBtn,"click",function () {
         if (index < 8) {
             reCourse(++index);
         }
@@ -517,7 +532,7 @@ function pagination(data, render, courseType, size) {
     // 页码数字点击事件
     for (var i = 1; i < paginationList.length-1; i++) {
         paginationList[i].id = i;
-        addEventListenerFun(paginationList[i],"click",function () {
+        addFuc(paginationList[i],"click",function () {
             index = this.id;
             reCourse(this.id);
         });
@@ -528,11 +543,11 @@ function pagination(data, render, courseType, size) {
 function showCourse() {
      var courseCell = document.getElementsByClassName('courseLi');
      for (var i = 0; i < courseCell.length; i++) {
-        addEventListenerFun(courseCell[i],"mouseover",function () {
+        addFuc(courseCell[i],"mouseover",function () {
            var dialog = this.getElementsByClassName('mDialog')[0];
            dialog.style.display = 'block';
         });
-        addEventListenerFun(courseCell[i],"mouseout",function () {
+        addFuc(courseCell[i],"mouseout",function () {
            var dialog = this.getElementsByClassName('mDialog')[0];
            dialog.style.display = 'none';
         });
@@ -544,14 +559,14 @@ function tabSwitch(size) {
         programBtn = document.getElementsByClassName('program')[0],
         data = null;
     // 点击事件
-    addEventListenerFun(productBtn,"click",function () {
+    addFuc(productBtn,"click",function () {
         if (hasClass(programBtn, 'current')) {
             removeClass(programBtn,'current');
             addClass(productBtn,'current');
             initCourse(1, size, 10);
         }
     });
-    addEventListenerFun(programBtn,"click",function () {
+    addFuc(programBtn,"click",function () {
         if (hasClass(productBtn, 'current')) {
             removeClass(productBtn,'current');
             addClass(programBtn,'current');
@@ -572,7 +587,7 @@ function mainContent() {
         tabSwitch(15);
     }
     // 根据窗口大小，做动态的布局改变
-    addEventListenerFun(window,"resize",function () {
+    addFuc(window,"resize",function () {
         if (tag == 15) {
             if (document.body.clientWidth >= 1205) {
                 tag = 20;
