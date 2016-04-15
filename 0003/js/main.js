@@ -1,8 +1,65 @@
-
-// 登陆弹窗
-$('#login').on('click', function () {
-	$('#myloginModal').modal('show');
+// 通知条
+$(function(){
+    var $tipclose = $(".tip .nomore");
+    $tipclose.click(function(){
+        $(".tip").hide();
+    });
 });
+
+// 登陆
+$(function(){
+    // 登陆弹窗
+    $('#login').click(function () {
+        $('#myloginModal').modal('show');
+    });
+    // 登陆表单验证
+    function validator(){
+        var $username = $("#myloginModal .username").val(),
+            $password = $("#myloginModal .password").val();
+        if($username !== "studyOnline"){
+            alert("请正确输入用户名");
+        } else if($password !== "study.163.com"){
+            alert("请正确输入密码");
+        } else{
+            return true;
+        } 
+    }
+    // 登陆ajax提交
+    $("#myloginModal .loginbtn").click(function(){
+        if(validator()){
+            // 如果输入正确就ajax提交登陆
+            $.ajax({
+                url:"http://study.163.com/webDev/login.htm",
+                data: {
+                    userName: md5('studyOnline'),
+                    password: md5('study.163.com')
+                },
+                method:"GET",
+                success: function (res) {
+                    if (res==1){
+                        // 如果登陆成功就设置登陆成功cookie，隐藏登陆弹窗，并ajax提交关注
+                        $('#myloginModal').modal('hide');
+
+                        $.ajax({
+                            url:"http://study.163.com/webDev/attention.htm",
+                            data: {},
+                            method:"GET",
+                            success: function (res) {
+                                if (res==1){
+                                    // 如果关注成功就隐藏关注按钮，显示已关注按钮
+                                   $(".followfuns .follow").hide(); 
+                                   $(".followfuns .followsuc").show(); 
+                                }
+                            } 
+                        });
+                    }
+                } 
+            }); 
+        }
+
+    });
+});
+
 // 轮播
 // 设置自动轮播时间
  	$('#myCarousel').carousel({
@@ -18,16 +75,14 @@ $('#login').on('click', function () {
 		$('.carousel-control').css('line-height', $height + 'px');
 	});
 // 视频弹窗
-$('#myvideo').on('click', function () {
+$('#myvideo').click(function () {
 	$('#myvideoModal').modal('show');
+    // 关闭弹窗时停止视频播放
+    // 不能实现监听视频弹窗的隐藏来暂停视频播放，待改进
+    $(".close").click(function(){
+        $("#orgvideo").get(0).pause();
+    });
 });
-// 关闭弹窗时停止视频播放
-// $(function(){
-// 	if($("#myvideoModal").is(":visible")==false){
-// 		var video = $("#orgvideo");
-// 		video.pause();
-// 	}
-// });
 
 // ajax请求hotlist数据
 $(function () {
@@ -79,7 +134,7 @@ function initCourse(pageNo,psize,ptype) {
             var $result = JSON.parse(data);
             courseRender($result.list, $result.pagination.pageSize);
             //页码导航功能
-        	pagination(courseRender, ptype, psize);
+        	$(pagination($result,courseRender, ptype, psize));
             showCourse();
         } 
     });
@@ -170,7 +225,7 @@ function showCourse() {
         };
      }
 }
-function pagination(courseRender, ptype, psize) {
+function pagination(data,courseRender, ptype, psize) {
     var $index = 1; // 当前页码
     // 初始化相关dom
     var $paginationList = $('.ele'),
@@ -198,7 +253,7 @@ function pagination(courseRender, ptype, psize) {
             $(paginationList[i]).removeClass('on');
         }
         $(paginationList[n]).addClass('on');
-    }    
+    }   
     //上一页、下一页点击事件
     $prevBtn.click(function () {
         if ($index > 1) {

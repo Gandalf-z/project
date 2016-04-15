@@ -44,13 +44,41 @@
 	padding-right: 10px;
 	margin-right: 10px;
 }
-.navbar-brand .funs{
-	font-size: 12px;
+.funs{
+	font-size: 10px;
 	margin-left: 10px;
+}
+.followfuns{
+	float: left;
+	line-height: 50px;
+}
+/*登陆弹窗*/
+#myloginModal .modal-footer{
+	text-align: center;
+}
+#myloginModal .btn-primary {
+  background-color:rgb(57,160,48);
+  border-color: rgb(57,160,48);
+  padding: 6px 70px;	
 }
 /*已关注的隐藏*/
 .followsuc{
 	display: none;
+}
+.followsuc button{
+	background-color: #eee;
+}	
+.followsuc button:hover{
+	background-color: #fff;
+}
+.followsuc #cancel{
+	margin-left: 5px;
+	border-left: 1px solid #ccc;
+	padding-left: 5px;
+}
+.followsuc #cancel:hover{
+	color: rgb(57,160,48);
+	text-decoration: underline;
 }
 .navbar-default .navbar-nav li:hover a{
 	color: rgb(57,160,48);
