@@ -10,9 +10,11 @@ function ajax(url,data,method,success,error) {
         success = success || function(){},
         error =  error || function (f) { alert(url+'发生错误！')};
     //在send之前重置onreadystatechange方法,否则会出现新的同步请求会执行两次成功回调
-    req.onreadystatechange = function  () {
+    req.onreadystatechange = function() {
+      // alert(url+"req.readyState"+req.readyState);
       if (req.readyState == 4){
-        if (req.status >= 200 && req.status < 300 || req.status == 304) {
+        // alert(url+"req.status"+req.status);
+        if (req.status  >= 200 && req.status < 300 || req.status == 304 || req.status == 0) {
           success && success(req.responseText);
         } else {
             error && error(req.status);
@@ -146,7 +148,14 @@ addLoadEvent(closeTip);
 function checkCookie() {
   //如果通知条tipCookie已设置，则不再显示通知条
   if (getCookie().tipCookie) {
+    // console.log(getCookie().tipCookie);
     hideTip();
+  }
+  if ((getCookie().loginSuc) &&(getCookie().followSuc)){
+    // console.log(getCookie().loginSuc);
+    // console.log(getCookie().followSuc);
+    hideFollow();
+    showFollowSuc();
   }
 }
 addFuc(window,"unbeforeunload",checkCookie());
@@ -164,8 +173,8 @@ function logIn() {
   //为关注按钮添加点击事件
   var follow = document.getElementById("follow");
   addFuc(follow,"click",function() { 
-    //先判断登陆的loginCookie是否已设置，登陆loginSuc cookie未设置checkLoginCookie函数返回true
-    if (checkLoginCookie()) {
+    //先判断登陆的loginCookie是否已设置
+    if (!getCookie().loginSuc) {
       // 登陆cookie未设置，弹出登陆弹窗
       showLoginPop();
       // 为登陆弹窗的关闭按钮添加点击事件，点击后关闭登陆弹窗
@@ -177,37 +186,36 @@ function logIn() {
       var loginButton = document.getElementById("loginButton");
       //点击事件
       addFuc(loginButton,"click",function() {
-        //获取用户输入的用户名和密码
-        var userName = document.getElementById("userName"),
-            password = document.getElementById("password");
-        //验证用户名和密码是否为空，不为空则ajax请求登陆      
-        if (validate(userName.value,"请输入用户名") && validate(password.value,"请输入密码")) {
-          if (userName.value == "studyOnline" && password.value == "study.163.com") {
+        // ajax请求登陆
+        if (validate()) {
             //ajax登陆
             ajax(
               url = 'http://study.163.com/webDev/login.htm',
               data = {
-                userName : md5("studyOnline"),
-                password : md5("study.163.com")
+                userName: md5("studyOnline"),
+                password: md5("study.163.com")
               },
               method = 'get',
               success = function(res) {
-                // alert(res);
+                // alert("登陆API的返回：" + res);
+                // ajax请求得到的status为0，网上搜索有的说是跨域问题，搞了好久还是没搞懂，唉
                 if(res==1){
                   //登陆成功，则设置loginSuc cookie
                   closeLoginPop();
                   setCookie("loginSuc","loginSucValue",30);
+                  // console.log(getCookie().loginSuc);
                   ajax(
                     url = 'http://study.163.com/webDev/attention.htm',
                     data = {},
                     method = 'get',
                     success = function(res) {
-                      // alert(res);
+                      alert("关注API的返回：" + res);
                       if(res==1){
                         //隐藏关注按钮，显示已关注按钮，并设置followSuc cookie
                         hideFollow();
                         showFollowSuc();
                         setCookie("followSuc","followSucValue",30);
+                        // console.log(getCookie().followSuc);
                       }
                     }
                   )
@@ -215,17 +223,13 @@ function logIn() {
               },
               error = function() {alert("登陆错误，请重新登陆")}
             )
-          } else {alert("请正确填写");} //输入不正确提示“请正确填写”          
         }
       });      
     } else {
       // 若已设置loginSuc cookie，调用关注API，并设置followSuc cookie
       ajax(
-        url = 'http://study.163.com/webDev/login.htm',
-        data = {
-          userName : md5("studyOnline"),
-          password : md5("study.163.com")
-        },
+        url = 'http://study.163.com/webDev/attention.htm',
+        data = {},
         method = 'get',
         success = function() {
           hideFollow();
@@ -236,20 +240,21 @@ function logIn() {
     }  
   });   
   // js表单验证是否输入用户名和密码必填项
-  function validate(field,alerttxt) {
-    if (field == null || field == "") {
-      alert(alerttxt);
-      return false;
-    } else {return true;}
-  }
-  //检查loginSuc cookie是否已设置
-  function checkLoginCookie() {
-    //如果登陆loginSuc cookie已设置，返回false
-    if (getCookie().loginSuc) {
-      return false;
-    } else {
-      // loginSuc cookie未设置返回true
+  function validate() {
+    //获取用户输入的用户名和密码
+    var userName = document.getElementById("userName").value,
+        password = document.getElementById("password").value;
+    //验证用户名和密码是否为空，不为空则      
+    if (userName == null || userName == ""){
+      alert("请输入用户名")
+    }
+    if (password == null || password == ""){
+      alert("请输入密码")
+    } 
+    if ((userName == "studyOnline") && (password == "study.163.com")){
       return true;
+    } else {
+      alert("请正确输入用户名和密码")
     }
   }
   //显示登陆弹窗
