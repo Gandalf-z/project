@@ -1,8 +1,23 @@
+// cookie检查
+$(window.onbeforeunload = function(){
+    if ($.cookie('tipClose')){
+        $(".tip").hide();
+    }
+    if ($.cookie('loginSuc')){
+        $('#myloginModal').modal('hide');
+        if ($.cookie('followSuc')){
+            $(".followfuns .follow").hide(); 
+            $(".followfuns .followsuc button").show();
+        }
+    }
+});
 // 通知条
 $(function(){
     var $tipclose = $(".tip .nomore");
     $tipclose.click(function(){
         $(".tip").hide();
+        $.cookie('tipClose', 'tipCloseValue');
+        console.log($.cookie('tipClose'));
     });
 });
 
@@ -39,16 +54,19 @@ $(function(){
                     if (res==1){
                         // 如果登陆成功就设置登陆成功cookie，隐藏登陆弹窗，并ajax提交关注
                         $('#myloginModal').modal('hide');
-
+                        $.cookie('loginSuc','loginSucValue');
+                        console.log($.cookie('loginSuc'));
                         $.ajax({
                             url:"http://study.163.com/webDev/attention.htm",
                             data: {},
                             method:"GET",
                             success: function (res) {
                                 if (res==1){
-                                    // 如果关注成功就隐藏关注按钮，显示已关注按钮
+                                    // 如果关注成功就隐藏关注按钮，显示已关注按钮，设置followSuc cookie
                                    $(".followfuns .follow").hide(); 
-                                   $(".followfuns .followsuc").show(); 
+                                   $(".followfuns .followsuc button").show(); 
+                                   $.cookie('followSuc','followSucValue');
+                                   console.log($.cookie('followSuc'));
                                 }
                             } 
                         });
@@ -134,7 +152,7 @@ function initCourse(pageNo,psize,ptype) {
             var $result = JSON.parse(data);
             courseRender($result.list, $result.pagination.pageSize);
             //页码导航功能
-        	$(pagination($result,courseRender, ptype, psize));
+        	$(pagination(pageNo,courseRender, ptype, psize));
             showCourse();
         } 
     });
@@ -225,10 +243,10 @@ function showCourse() {
         };
      }
 }
-function pagination(data,courseRender, ptype, psize) {
+function pagination(pageNo,courseRender, ptype, psize) {
     var $index = 1; // 当前页码
     // 初始化相关dom
-    var $paginationList = $('.ele'),
+    var $paginationList = $('.pagination .ele'),
     	$prevBtn = $paginationList[0],
     	$nextBtn = $paginationList[$paginationList.length-1];
     // 页码切换
@@ -241,7 +259,7 @@ function pagination(data,courseRender, ptype, psize) {
             	type: ptype
         	},
         	method : "GET",
-        	success : function(res) {      
+        	success : function(res) { 
         		var $result1 = JSON.parse(res);
             	courseRender($result1.list, $result1.pagination.pageSize);
             	// 显示课程详情
@@ -249,34 +267,40 @@ function pagination(data,courseRender, ptype, psize) {
           	}
         });
         // 页码样式变换
-        for (var i = 1; i < $paginationList.length-1; i++) {
-            $(paginationList[i]).removeClass('on');
+        for (var i = 0; i < $paginationList.length-1; i++) {
+            $($paginationList[i]).removeClass('on');
         }
-        $(paginationList[n]).addClass('on');
+        $($paginationList[n]).addClass('on');
+        if (n == 1) {
+            $($prevBtn).addClass("disabled");
+            $($nextBtn).removeClass("disabled");
+        }else if (n == $paginationList.length-2) {
+            $($nextBtn).addClass("disabled");
+            $($prevBtn).removeClass("disabled");
+        } else {
+            $($nextBtn).removeClass("disabled");
+            $($prevBtn).removeClass("disabled");
+        }
+        
     }   
+    reCourse (pageNo);
     //上一页、下一页点击事件
-    $prevBtn.click(function () {
+    $($prevBtn).click(function () {
         if ($index > 1) {
             reCourse(--$index);
-            $prevBtn.removeClass("disabled")
-        } else {
-        	$prevBtn.addClass("disabled")
         }
     });
-    $nextBtn.click(function () {
+    $($nextBtn).click(function () {
         if ($index < 8) {
             reCourse(++$index);
-            $nextBtn.removeClass("disabled")
-        } else {
-        	$nextBtn.addClass("disabled")
         }
     });
     // 页码数字点击事件
     for (var i = 1; i < $paginationList.length-1; i++) {
         $paginationList[i].id = i;
-        $paginationList[i].click(function () {
+        $paginationList[i].onclick = function () {
             $index = this.id;
             reCourse(this.id);
-        });
+        }
     }
 }
