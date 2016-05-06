@@ -1,0 +1,42 @@
+/*main*/
+/*更改ui tabs垂直显示*/
+.ui-tabs-vertical { 
+  width: 75%; 
+  margin-bottom: 30px;
+  padding: 10px;
+}
+.ui-tabs-vertical .ui-tabs-nav { 
+  padding: 0; 
+  float: left; 
+  width: 12em; 
+  background-color: #fff;
+  border: none;
+}
+.ui-tabs-vertical .ui-tabs-nav li { 
+  clear: left; 
+  width: 100%; 
+  border-bottom-width: 1px !important; 
+  border-right-width: 0 !important; 
+  margin: 0 -1px .2em 0; }
+.ui-tabs-vertical .ui-tabs-nav li a { 
+  display:block; 
+}
+.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active { 
+  padding-right: .1em; 
+  border-right-width: 1px; 
+}
+.ui-tabs-vertical .ui-tabs-panel { 
+  float: right; 
+  width: 45em;
+}
+#tabs-1 h3,#tabs-2 h3,#tabs-3 h3{
+  font-weight: bold;
+  font-size: 14px;
+  margin: 10px 0;
+}
+#tabs-1 p,#tabs-2 p,#tabs-3 p{
+  text-indent: 2em;
+  letter-spacing: 2px;
+  line-height: 1.5;
+  font-size: 13px;
+}
